@@ -1,6 +1,6 @@
 package main
 
 func main() {
-	RunDay4Part1()
-	RunDay4Part2()
+	RunDay5Part1()
+	RunDay5Part2()
 }
