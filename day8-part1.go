@@ -72,8 +72,7 @@ func RunDay8Part1() {
 	var seen []string
 
 	// find antinodes
-	for key, list := range data {
-		fmt.Println(key, list)
+	for _, list := range data {
 		for i := 0; i < len(list); i++ {
 			for j := i + 1; j < len(list); j++ {
 				if i == j {
