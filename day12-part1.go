@@ -20,13 +20,14 @@ func getPlantAt(inPoint utils.Point, inData []string, inRows, inCols int) string
 }
 
 func calcRegions(inType string, inRegion *[]Plant, inData []string, inRows, inCols int, inpSeen *map[string]bool) {
-	testPlant := (*inRegion)[len(*inRegion)-1]
+	testPlantIndex := len(*inRegion) - 1
+	testPlant := (*inRegion)[testPlantIndex]
 
 	// do some caching checks
 	label := fmt.Sprintf("%v-%v", testPlant.X, testPlant.Y)
 	if _, seen := (*inpSeen)[label]; seen {
 		// remove last point
-		*inRegion = (*inRegion)[:len(*inRegion)-1]
+		*inRegion = (*inRegion)[:testPlantIndex]
 		return
 	}
 	(*inpSeen)[label] = true
@@ -39,7 +40,7 @@ func calcRegions(inType string, inRegion *[]Plant, inData []string, inRows, inCo
 	topPos := utils.Point{X: testPlant.X, Y: testPlant.Y - 1}
 	topPlant := getPlantAt(topPos, inData, inRows, inCols)
 	if topPlant == inType {
-		(*inRegion)[len(*inRegion)-1].score-- // reduce score of testPlant by 1
+		(*inRegion)[testPlantIndex].score-- // reduce score of testPlant by 1
 		topPlant := Plant{X: topPos.X, Y: topPos.Y, score: 4}
 		*inRegion = append(*inRegion, topPlant)
 		calcRegions(inType, inRegion, inData, inRows, inCols, inpSeen)
@@ -48,7 +49,7 @@ func calcRegions(inType string, inRegion *[]Plant, inData []string, inRows, inCo
 	bottomPos := utils.Point{X: testPlant.X, Y: testPlant.Y + 1}
 	bottomPlant := getPlantAt(bottomPos, inData, inRows, inCols)
 	if bottomPlant == inType {
-		(*inRegion)[len(*inRegion)-1].score-- // reduce score of testPlant by 1
+		(*inRegion)[testPlantIndex].score-- // reduce score of testPlant by 1
 		bottomPlant := Plant{X: bottomPos.X, Y: bottomPos.Y, score: 4}
 		*inRegion = append(*inRegion, bottomPlant)
 		calcRegions(inType, inRegion, inData, inRows, inCols, inpSeen)
@@ -57,7 +58,7 @@ func calcRegions(inType string, inRegion *[]Plant, inData []string, inRows, inCo
 	leftPos := utils.Point{X: testPlant.X - 1, Y: testPlant.Y}
 	leftPlant := getPlantAt(leftPos, inData, inRows, inCols)
 	if leftPlant == inType {
-		(*inRegion)[len(*inRegion)-1].score-- // reduce score of testPlant by 1
+		(*inRegion)[testPlantIndex].score-- // reduce score of testPlant by 1
 		leftPlant := Plant{X: leftPos.X, Y: leftPos.Y, score: 4}
 		*inRegion = append(*inRegion, leftPlant)
 		calcRegions(inType, inRegion, inData, inRows, inCols, inpSeen)
@@ -66,7 +67,7 @@ func calcRegions(inType string, inRegion *[]Plant, inData []string, inRows, inCo
 	rightPos := utils.Point{X: testPlant.X + 1, Y: testPlant.Y}
 	rightPlant := getPlantAt(rightPos, inData, inRows, inCols)
 	if rightPlant == inType {
-		(*inRegion)[len(*inRegion)-1].score-- // reduce score of testPlant by 1
+		(*inRegion)[testPlantIndex].score-- // reduce score of testPlant by 1
 		rightPlant := Plant{X: rightPos.X, Y: rightPos.Y, score: 4}
 		*inRegion = append(*inRegion, rightPlant)
 		calcRegions(inType, inRegion, inData, inRows, inCols, inpSeen)

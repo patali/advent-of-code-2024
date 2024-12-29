@@ -7,6 +7,10 @@ type Point struct {
 	Y int
 }
 
+func (inA Point) Equals(inB Point) bool {
+	return inA.X == inB.X && inA.Y == inB.Y
+}
+
 func ThreePointsInLine(inA, inB, inC Point) bool {
 	return (inA.X-inC.X)*(inC.Y-inB.Y) == (inC.X-inB.X)*(inA.Y-inC.Y)
 }
